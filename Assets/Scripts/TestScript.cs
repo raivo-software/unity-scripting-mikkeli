@@ -7,28 +7,46 @@ public class TestScript : MonoBehaviour
     public GameObject Sphere;
 
     public float speedMultiplier = 1;
+
+    private Vector3 movementDirection;
     
     void Update()
     {
         HandleInputs();
+        Move();
+    }
+
+    private void Move()
+    {
+        if (movementDirection != null)
+        {
+            Vector3 newPosition = transform.position + (movementDirection * Time.deltaTime * speedMultiplier);
+            if (newPosition.x >= 0)
+                transform.position = newPosition;
+        }
     }
 
     private void HandleInputs()
     {
-        if(Input.GetKey(KeyCode.RightArrow)) {
-            transform.Translate(Vector3.right * speedMultiplier * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if(Input.GetKeyDown(KeyCode.W))
         {
-            transform.Translate(Vector3.left * speedMultiplier * Time.deltaTime);
+            movementDirection = Vector3.up;
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            transform.Translate(Vector3.up * speedMultiplier * Time.deltaTime);
+            movementDirection = Vector3.left;
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            transform.Translate(Vector3.down * speedMultiplier * Time.deltaTime);
+            movementDirection = Vector3.down;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            movementDirection = Vector3.right;
+        }
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            movementDirection = Vector3.zero;
         }
     }
 }
