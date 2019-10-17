@@ -5,6 +5,8 @@ using UnityEngine;
 public class TestScript : MonoBehaviour
 {
     public GameObject Sphere;
+
+    public float speedMultiplier = 1;
     
     void Update()
     {
@@ -13,32 +15,20 @@ public class TestScript : MonoBehaviour
 
     private void HandleInputs()
     {
-        
-        if(Input.GetMouseButtonDown(0))
-        {
-            Sphere.SetActive(!Sphere.activeInHierarchy);
+        if(Input.GetKey(KeyCode.RightArrow)) {
+            transform.Translate(Vector3.right * speedMultiplier * Time.deltaTime);
         }
-
-        SphereController sphereController = Sphere.GetComponent<SphereController>();
-        if(Input.GetMouseButtonDown(1) && sphereController == null)
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
-            Sphere.AddComponent<SphereController>();
+            transform.Translate(Vector3.left * speedMultiplier * Time.deltaTime);
         }
-
-        if(Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
-            GameObject newSphere = GameObject.Instantiate(Sphere);
+            transform.Translate(Vector3.up * speedMultiplier * Time.deltaTime);
         }
-
-        if(Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
-            Destroy(Sphere);
-        }
-
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            GameObject clonedSphere = GameObject.Find("Sphere(Clone)");
-            Sphere = clonedSphere;
+            transform.Translate(Vector3.down * speedMultiplier * Time.deltaTime);
         }
     }
 }
